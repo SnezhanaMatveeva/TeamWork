@@ -1,5 +1,5 @@
-
 import java.util.Scanner;
+
 
 public class Main {
 
@@ -39,14 +39,18 @@ public class Main {
                     continue;
                 }
                 productCount = Integer.parseInt(amount[1]);
-                if (productCount <= 0) {
-                    System.out.println("Количество продуктов должно быть больше нуля. ");
-                    continue;
-                }
+
                 int currentPrice = prices[productNumber];
-                amountProducts[productNumber] = amountProducts[productNumber] + productCount;
-                int sumSum = currentPrice * productCount;
-                sumProducts += sumSum;
+                if (productCount == 0 || amountProducts[productNumber] + productCount < 0) {
+                    sumProducts -= currentPrice * amountProducts[productNumber];
+                    amountProducts[productNumber] = 0;
+                } else {
+                    amountProducts[productNumber] = amountProducts[productNumber] + productCount;
+                    int sumSum = currentPrice * productCount;
+                    sumProducts += sumSum;
+                }
+
+
             } catch (NumberFormatException e) {
                 System.out.println("Ввод должен состоять из чисел=) ");
                 continue;
@@ -54,11 +58,13 @@ public class Main {
 
 
             System.out.println("Ваша корзина: ");
+
             for (int i = 0; i < products.length; i++) {
-                if (amountProducts[i] > 0)
+                if (amountProducts[i] > 0) {
                     System.out.println(products[i] + ": " + amountProducts[i] + " шт " + prices[i] + " руб/шт " + (amountProducts[i] * prices[i]) + " рублей в сумме. ");
+                }
+                System.out.println("Итого: " + sumProducts + " рублей. ");
             }
-            System.out.println("Итого: " + sumProducts + " рублей. ");
         }
     }
 }
