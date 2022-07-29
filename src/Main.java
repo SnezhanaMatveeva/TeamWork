@@ -1,5 +1,5 @@
 import java.util.Scanner;
-
+import java.util.stream.IntStream;
 
 public class Main {
 
@@ -9,6 +9,8 @@ public class Main {
 
         int[] amountProducts = new int[3];
 
+        int[] sumProducts = new int[3];
+
 
         Scanner scanner = new Scanner(System.in);
 
@@ -17,7 +19,7 @@ public class Main {
             System.out.println((i + 1) + "." + " " + products[i] + " " + prices[i] + " " + "руб/шт");
         }
 
-        int sumProducts = 0;
+        //int sumProducts = 0;
         while (true) {
             int productNumber = 0;
             int productCount = 0;
@@ -42,15 +44,19 @@ public class Main {
 
                 int currentPrice = prices[productNumber];
                 if (productCount == 0 || amountProducts[productNumber] + productCount < 0) {
-                    sumProducts -= currentPrice * amountProducts[productNumber];
+                    sumProducts[productNumber] -= currentPrice * amountProducts[productNumber];
                     amountProducts[productNumber] = 0;
                 } else {
+
+
                     amountProducts[productNumber] = amountProducts[productNumber] + productCount;
-                    int sumSum = currentPrice * productCount;
-                    sumProducts += sumSum;
+                    int sumSum = currentPrice * amountProducts[productNumber];
+                    double discount = (double) amountProducts[productNumber] / 3;
+                    discount = Math.floor(discount) * currentPrice;
+                    sumProducts[productNumber] = sumSum - (int) discount;
                 }
 
-
+                //sumProducts += sumSum;
             } catch (NumberFormatException e) {
                 System.out.println("Ввод должен состоять из чисел=) ");
                 continue;
@@ -60,11 +66,10 @@ public class Main {
             System.out.println("Ваша корзина: ");
 
             for (int i = 0; i < products.length; i++) {
-                if (amountProducts[i] > 0) {
-                    System.out.println(products[i] + ": " + amountProducts[i] + " шт " + prices[i] + " руб/шт " + (amountProducts[i] * prices[i]) + " рублей в сумме. ");
-                }
-                System.out.println("Итого: " + sumProducts + " рублей. ");
+                if (amountProducts[i] > 0)
+                    System.out.println(products[i] + ": " + amountProducts[i] + " шт " + prices[i] + " руб/шт " + sumProducts + " рублей в сумме. ");
             }
+            System.out.println("Итого: " + IntStream.of(sumProducts).sum() + " рублей. ");
         }
     }
 }
