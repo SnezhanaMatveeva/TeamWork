@@ -67,7 +67,7 @@ public class Main {
 
             for (int i = 0; i < products.length; i++) {
                 if (amountProducts[i] > 0)
-                    System.out.println(products[i] + ": " + amountProducts[i] + " шт " + prices[i] + " руб/шт " + sumProducts + " рублей в сумме. ");
+                    System.out.println(products[i] + ": " + amountProducts[i] + " шт " + prices[i] + " руб/шт " + sumProducts[i] + " рублей в сумме. ");
             }
             System.out.println("Итого: " + IntStream.of(sumProducts).sum() + " рублей. ");
         }
