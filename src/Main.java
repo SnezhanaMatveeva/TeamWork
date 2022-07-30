@@ -1,3 +1,5 @@
+
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
@@ -5,6 +7,8 @@ public class Main {
 
     public static void main(String[] args) {
         String[] products = {"Хлеб", "Яблоки", "Молоко"};
+        String[] productsOnSale = {"Хлеб", "Яблоки"};
+
         int[] prices = {100, 200, 300};
 
         int[] amountProducts = new int[3];
@@ -16,7 +20,8 @@ public class Main {
 
         System.out.println("Список возможных товаров для покупки");
         for (int i = 0; i < products.length; i++) {
-            System.out.println((i + 1) + "." + " " + products[i] + " " + prices[i] + " " + "руб/шт");
+            String onSale = Arrays.asList(productsOnSale).contains(products[i]) ? " (3 по цене 2х)" : "";
+            System.out.println((i + 1) + "." + " " + products[i] + " " + prices[i] + " " + "руб/шт" + onSale);
         }
 
         //int sumProducts = 0;
@@ -43,10 +48,20 @@ public class Main {
                 productCount = Integer.parseInt(amount[1]);
 
                 int currentPrice = prices[productNumber];
+                amountProducts[productNumber] = amountProducts[productNumber] + productCount;
+                int sumSum = currentPrice * amountProducts[productNumber];
+                double discount = 0.0;
+                if (Arrays.asList(productsOnSale).contains(products[productNumber])) {
+                   discount = (double) amountProducts[productNumber] / 3;
+                   discount = Math.floor(discount) * currentPrice;
+                }
+                sumProducts[productNumber] = sumSum - (int) discount;
+
                 if (productCount == 0 || amountProducts[productNumber] + productCount < 0) {
                     sumProducts[productNumber] -= currentPrice * amountProducts[productNumber];
                     amountProducts[productNumber] = 0;
                 } else {
+
 
 
                     amountProducts[productNumber] = amountProducts[productNumber] + productCount;
