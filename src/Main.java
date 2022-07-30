@@ -46,10 +46,7 @@ public class Main {
                     continue;
                 }
                 productCount = Integer.parseInt(amount[1]);
-                if (productCount <= 0) {
-                    System.out.println("Количество продуктов должно быть больше нуля. ");
-                    continue;
-                }
+
                 int currentPrice = prices[productNumber];
                 amountProducts[productNumber] = amountProducts[productNumber] + productCount;
                 int sumSum = currentPrice * amountProducts[productNumber];
@@ -60,6 +57,19 @@ public class Main {
                 }
                 sumProducts[productNumber] = sumSum - (int) discount;
 
+                if (productCount == 0 || amountProducts[productNumber] + productCount < 0) {
+                    sumProducts[productNumber] -= currentPrice * amountProducts[productNumber];
+                    amountProducts[productNumber] = 0;
+                } else {
+
+
+
+                    amountProducts[productNumber] = amountProducts[productNumber] + productCount;
+                    int sumSum = currentPrice * amountProducts[productNumber];
+                    double discount = (double) amountProducts[productNumber] / 3;
+                    discount = Math.floor(discount) * currentPrice;
+                    sumProducts[productNumber] = sumSum - (int) discount;
+                }
 
                 //sumProducts += sumSum;
             } catch (NumberFormatException e) {
@@ -69,6 +79,7 @@ public class Main {
 
 
             System.out.println("Ваша корзина: ");
+
             for (int i = 0; i < products.length; i++) {
                 if (amountProducts[i] > 0)
                     System.out.println(products[i] + ": " + amountProducts[i] + " шт " + prices[i] + " руб/шт " + sumProducts[i] + " рублей в сумме. ");
