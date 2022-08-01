@@ -61,14 +61,7 @@ public class Main {
                     sumProducts[productNumber] -= currentPrice * amountProducts[productNumber];
                     amountProducts[productNumber] = 0;
                 } else {
-
-
-
-                    amountProducts[productNumber] = amountProducts[productNumber] + productCount;
-                    int sumSum = currentPrice * amountProducts[productNumber];
-                    double discount = (double) amountProducts[productNumber] / 3;
-                    discount = Math.floor(discount) * currentPrice;
-                    sumProducts[productNumber] = sumSum - (int) discount;
+                    
                 }
 
                 //sumProducts += sumSum;
