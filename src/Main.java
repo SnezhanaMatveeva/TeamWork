@@ -1,23 +1,30 @@
 
+import java.util.Arrays;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class Main {
 
     public static void main(String[] args) {
         String[] products = {"Хлеб", "Яблоки", "Молоко"};
+        String[] productsOnSale = {"Хлеб", "Яблоки"};
+
         int[] prices = {100, 200, 300};
 
         int[] amountProducts = new int[3];
+
+        int[] sumProducts = new int[3];
 
 
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Список возможных товаров для покупки");
         for (int i = 0; i < products.length; i++) {
-            System.out.println((i + 1) + "." + " " + products[i] + " " + prices[i] + " " + "руб/шт");
+            String onSale = Arrays.asList(productsOnSale).contains(products[i]) ? " (3 по цене 2х)" : "";
+            System.out.println((i + 1) + "." + " " + products[i] + " " + prices[i] + " " + "руб/шт" + onSale);
         }
 
-        int sumProducts = 0;
+        //int sumProducts = 0;
         while (true) {
             int productNumber = 0;
             int productCount = 0;
@@ -44,11 +51,18 @@ public class Main {
                     sumProducts -= sumSum;
                     amountProducts[productNumber]=0;
 
-                }else{
-                int currentPrice = prices[productNumber];
-                amountProducts[productNumber] = amountProducts[productNumber] + productCount;
-                int sumSum = currentPrice * productCount;
-                sumProducts += sumSum;}
+                }else {
+                    int currentPrice = prices[productNumber];
+                    amountProducts[productNumber] = amountProducts[productNumber] + productCount;
+                    int sumSum = currentPrice * amountProducts[productNumber];
+                    int discount = 0;
+                    if (Arrays.asList(productsOnSale).contains(products[productNumber])) {
+                        discount = amountProducts[productNumber] / 3 * currentPrice;
+                    }
+                    sumProducts[productNumber] = sumSum - discount;
+                }
+
+                //sumProducts += sumSum;
             } catch (NumberFormatException e) {
                 System.out.println("Ввод должен состоять из чисел=) ");
                 continue;
@@ -58,9 +72,9 @@ public class Main {
             System.out.println("Ваша корзина: ");
             for (int i = 0; i < products.length; i++) {
                 if (amountProducts[i] > 0)
-                    System.out.println(products[i] + ": " + amountProducts[i] + " шт " + prices[i] + " руб/шт " + (amountProducts[i] * prices[i]) + " рублей в сумме. ");
+                    System.out.println(products[i] + ": " + amountProducts[i] + " шт " + prices[i] + " руб/шт " + sumProducts[i] + " рублей в сумме. ");
             }
-            System.out.println("Итого: " + sumProducts + " рублей. ");
+            System.out.println("Итого: " + IntStream.of(sumProducts).sum() + " рублей. ");
         }
     }
 }
