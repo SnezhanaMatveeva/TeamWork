@@ -53,12 +53,11 @@ public class Main {
                 int currentPrice = prices[productNumber];
                 amountProducts[productNumber] = amountProducts[productNumber] + productCount;
                 int sumSum = currentPrice * amountProducts[productNumber];
-                double discount = 0.0;
+                int discount = 0;
                 if (Arrays.asList(productsOnSale).contains(products[productNumber])) {
-                   discount = (double) amountProducts[productNumber] / 3;
-                   discount = Math.floor(discount) * currentPrice;
+                   discount = amountProducts[productNumber] / 3 * currentPrice;
                 }
-                sumProducts[productNumber] = sumSum - (int) discount;
+                sumProducts[productNumber] = sumSum - discount;
 
 
                 //sumProducts += sumSum;
