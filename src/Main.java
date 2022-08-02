@@ -24,7 +24,6 @@ public class Main {
             System.out.println((i + 1) + "." + " " + products[i] + " " + prices[i] + " " + "руб/шт" + onSale);
         }
 
-        //int sumProducts = 0;
         while (true) {
             int productNumber = 0;
             int productCount = 0;
@@ -47,11 +46,10 @@ public class Main {
                 }
                 productCount = Integer.parseInt(amount[1]);
                 if (productCount == 0) {
-                    int sumSum = prices[productNumber] *  amountProducts[productNumber];
-                    sumProducts -= sumSum;
-                    amountProducts[productNumber]=0;
+                    sumProducts[productNumber] = 0;
+                    amountProducts[productNumber] = 0;
 
-                }else {
+                } else {
                     int currentPrice = prices[productNumber];
                     amountProducts[productNumber] = amountProducts[productNumber] + productCount;
                     int sumSum = currentPrice * amountProducts[productNumber];
@@ -62,7 +60,7 @@ public class Main {
                     sumProducts[productNumber] = sumSum - discount;
                 }
 
-                //sumProducts += sumSum;
+
             } catch (NumberFormatException e) {
                 System.out.println("Ввод должен состоять из чисел=) ");
                 continue;
