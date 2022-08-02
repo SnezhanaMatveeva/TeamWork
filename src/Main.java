@@ -39,14 +39,16 @@ public class Main {
                     continue;
                 }
                 productCount = Integer.parseInt(amount[1]);
-                if (productCount <= 0) {
-                    System.out.println("Количество продуктов должно быть больше нуля. ");
-                    continue;
-                }
+                if (productCount == 0) {
+                    int sumSum = prices[productNumber] *  amountProducts[productNumber];
+                    sumProducts -= sumSum;
+                    amountProducts[productNumber]=0;
+
+                }else{
                 int currentPrice = prices[productNumber];
                 amountProducts[productNumber] = amountProducts[productNumber] + productCount;
                 int sumSum = currentPrice * productCount;
-                sumProducts += sumSum;
+                sumProducts += sumSum;}
             } catch (NumberFormatException e) {
                 System.out.println("Ввод должен состоять из чисел=) ");
                 continue;
