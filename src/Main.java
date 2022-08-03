@@ -57,9 +57,15 @@ public class Main {
                     if (Arrays.asList(productsOnSale).contains(products[productNumber])) {
                         discount = amountProducts[productNumber] / 3 * currentPrice;
                     }
-                    sumProducts[productNumber] = sumSum - discount;
+                    if (sumSum < 0) {
+                        sumProducts[productNumber] = 0;
+                        amountProducts[productNumber] = 0;
+                        System.out.println("Корзина удалена");
+                        continue;
+                    } else {
+                        sumProducts[productNumber] = sumSum - discount;
+                    }
                 }
-
 
             } catch (NumberFormatException e) {
                 System.out.println("Ввод должен состоять из чисел=) ");
