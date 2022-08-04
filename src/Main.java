@@ -24,7 +24,6 @@ public class Main {
             System.out.println((i + 1) + "." + " " + products[i] + " " + prices[i] + " " + "руб/шт" + onSale);
         }
 
-        //int sumProducts = 0;
         while (true) {
             int productNumber = 0;
             int productCount = 0;
@@ -46,21 +45,28 @@ public class Main {
                     continue;
                 }
                 productCount = Integer.parseInt(amount[1]);
-                if (productCount <= 0) {
-                    System.out.println("Количество продуктов должно быть больше нуля. ");
-                    continue;
-                }
-                int currentPrice = prices[productNumber];
-                amountProducts[productNumber] = amountProducts[productNumber] + productCount;
-                int sumSum = currentPrice * amountProducts[productNumber];
-                int discount = 0;
-                if (Arrays.asList(productsOnSale).contains(products[productNumber])) {
-                   discount = amountProducts[productNumber] / 3 * currentPrice;
-                }
-                sumProducts[productNumber] = sumSum - discount;
+                if (productCount == 0) {
+                    sumProducts[productNumber] = 0;
+                    amountProducts[productNumber] = 0;
 
+                } else {
+                    int currentPrice = prices[productNumber];
+                    amountProducts[productNumber] = amountProducts[productNumber] + productCount;
+                    int sumSum = currentPrice * amountProducts[productNumber];
+                    int discount = 0;
+                    if (Arrays.asList(productsOnSale).contains(products[productNumber])) {
+                        discount = amountProducts[productNumber] / 3 * currentPrice;
+                    }
+                    if (sumSum < 0) {
+                        sumProducts[productNumber] = 0;
+                        amountProducts[productNumber] = 0;
+                        System.out.println("Корзина удалена");
+                        continue;
+                    } else {
+                        sumProducts[productNumber] = sumSum - discount;
+                    }
+                }
 
-                //sumProducts += sumSum;
             } catch (NumberFormatException e) {
                 System.out.println("Ввод должен состоять из чисел=) ");
                 continue;
